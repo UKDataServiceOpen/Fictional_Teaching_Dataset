@@ -1,5 +1,3 @@
-![UKDS Logo](./code/images/UKDS_Logos_Col_Grey_300dpi.png)<br>
-<br>
 # Fictional Teaching Dataset: Household and Individual Survey Files
 
 ## About this repo
