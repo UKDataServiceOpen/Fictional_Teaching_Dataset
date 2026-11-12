@@ -1,216 +1,66 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2822
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\froman\fcharset0 TimesNewRomanPSMT;\f2\fswiss\fcharset0 Arial-BoldMT;
-}
-{\colortbl;\red255\green255\blue255;\red114\green13\blue139;\red25\green26\blue26;}
-{\*\expandedcolortbl;;\cssrgb\c52941\c15294\c61569;\cssrgb\c12941\c13725\c13333;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww20220\viewh11680\viewkind0
-\deftab720
-\pard\pardeftab720\sa213\partightenfactor0
+Syntaxes of the “Optional: Try it with the data” activity 
 
-\f0\fs53\fsmilli26667 \cf2 \expnd0\expndtw0\kerning0
-The syntaxes in SPSS, R and Stata of how to:\
-\pard\pardeftab720\li951\fi-476\sl368\sa160\partightenfactor0
+The syntaxes in SPSS, R and Stata of how to:
+1.    Create a variable identifying individuals aged 11–15.
+2.    Use this to calculate the number of children aged 11–15 in each household.
 
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cf3 1.
-\f1\fs18\fsmilli9333 \AppleTypeServices\AppleTypeServicesF65539 \'a0\'a0\'a0 
-\f0\fs32 \AppleTypeServices\AppleTypeServicesF65539 Create a variable identifying individuals aged 11\'9615.\
-2.
-\f1\fs18\fsmilli9333 \AppleTypeServices\AppleTypeServicesF65539 \'a0\'a0\'a0 
-\f0\fs32 \AppleTypeServices\AppleTypeServicesF65539 Use this to calculate the number of children aged 11\'9615 in each household.\
-\
+SPSS
+#Use the individual-level data file to identify individuals aged 11–15.
+COMPUTE number_child_11_15 = (AGE_CAT = 3).
+ 
+#Group individuals by HHID and create the number of children aged 11–15 in each household.
+AGGREGATE
+ /OUTFILE=* MODE=ADDVARIABLES
+ /BREAK=HHID
+ /total_number_child_11_15 = SUM(number_child_11_15).
 
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trwWidth7109\trftsWidth3 \trmarl29 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth6989\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\f2\b\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 SPSS
-\f0\b0\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 #Use the individual-level data file to identify individuals aged 11\'9615.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 COMPUTE number_child_11_15 = (AGE_CAT = 3).
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 #Group individuals by HHID and create the number of children aged 11\'9615 in each household.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 AGGREGATE
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0/OUTFILE=* MODE=ADDVARIABLES
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0/BREAK=HHID
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0/total_number_child_11_15\'a0= SUM(number_child_11_15).
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trwWidth7109\trftsWidth3 \trmarl29 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth6989\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\f2\b\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 \
 R
-\f0\b0\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
+#Load the dplyr package from R library for data manipulation.
+library(dplyr) 
+ 
+#Group by HHID to count children, attach the new variable to all individuals in the household, and ungroup data.
+Individual_level <- Individual_level %>%
+ group_by(HHID) %>%
+ mutate(total_number_child_11_15 = sum(AGE_CAT == 3)) %>%
+ ungroup()
 
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 #Load the dplyr package from R library for data manipulation.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 library(dplyr)\'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 #Group by HHID\'a0to count children, attach\'a0the new variable to all individuals in the household, and ungroup data.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 Individual_level <- Individual_level %>%
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0group_by(HHID) %>%
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0mutate(total_number_child_11_15 = sum(AGE_CAT == 3)) %>%
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0ungroup()
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trwWidth7109\trftsWidth3 \trmarl29 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth6989\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\f2\b\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 \
 Stata
-\f0\b0\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
+# Create the variable number_child_11_15.
+gen number_child_11_15 = (AGE_CAT == 3) 
+ 
+# calculate the number of children aged 11–15 in each household.
+bysort HHID: egen total_number_child_11_15 = total(number_child_11_15)
 
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 # Create the variable number_child_11_15.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
 
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 gen number_child_11_15 = (AGE_CAT == 3)\'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
 
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
+The syntaxes in SPSS, R and Stata of how to:
+3.    Add this new household-level variable to the household-level dataset.
+4.    Merge the household-level dataset with the individual-level dataset using household ID, so that each individual record includes the household-level information.
 
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 # calculate the number of children aged 11\'9615 in each household.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
+SPSS
+# Sort both files by HHID first.
+SORT CASES BY HHID.
+DATASET ACTIVATE Household_level.
+SORT CASES BY HHID.
+ 
+# Merge household variables into individual file.
+MATCH FILES
+ /FILE=Individual_level
+ /TABLE=Household_level
+ /BY HHID.
+EXECUTE.
 
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 bysort HHID: egen total_number_child_11_15 = total(number_child_11_15)
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cell \lastrow\row
-\pard\pardeftab720\li951\fi-476\sl368\sa160\partightenfactor0
-\cf3 \
-\pard\pardeftab720\sa213\partightenfactor0
-
-\fs53\fsmilli26667 \AppleTypeServices \cf2 The syntaxes in SPSS, R and Stata of how to:\
-\pard\pardeftab720\li951\fi-476\sl368\sa160\partightenfactor0
-
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cf3 3.
-\f1\fs18\fsmilli9333 \AppleTypeServices\AppleTypeServicesF65539 \'a0\'a0\'a0 
-\f0\fs32 \AppleTypeServices\AppleTypeServicesF65539 Add this new household-level variable to the household-level dataset.\
-4.
-\f1\fs18\fsmilli9333 \AppleTypeServices\AppleTypeServicesF65539 \'a0\'a0\'a0 
-\f0\fs32 \AppleTypeServices\AppleTypeServicesF65539 Merge the household-level dataset with the individual-level dataset using household ID, so that each individual record includes the household-level information.\
-\
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trwWidth7112\trftsWidth3 \trmarl26 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth6992\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\f2\b\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 SPSS
-\f0\b0\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 # Sort both files by HHID first.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 SORT CASES BY HHID.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 DATASET ACTIVATE Household_level.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 SORT CASES BY HHID.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 # Merge household variables into individual file.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 MATCH FILES
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0/FILE=Individual_level
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0/TABLE=Household_level
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0/BY HHID.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 EXECUTE.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trwWidth7112\trftsWidth3 \trmarl26 \trbrdrl\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth6992\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\f2\b\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 \
 R
-\f0\b0\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
+#Load the dplyr package from R library for data manipulation.
+library(dplyr) 
+ 
+# Merge the two datafiles using the key variable HHID.
+merged_file <- Individual_level %>%
+ left_join(Household_level, by = "HHID")
 
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 #Load the dplyr package from R library for data manipulation.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 library(dplyr)\'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 # Merge the two datafiles using the key variable HHID.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 merged_file <- Individual_level %>%
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0left_join(Household_level, by = "HHID")
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cell \row
-
-\itap1\trowd \taflags0 \trgaph108\trleft-108 \trwWidth7112\trftsWidth3 \trmarl26 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
-\clvertalc \clshdrawnil \clwWidth6992\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadt20 \clpadl20 \clpadb20 \clpadr20 \gaph\cellx8640
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\f2\b\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 \
 Stata
-\f0\b0\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-\pard\intbl\itap1\pardeftab720\sl337\sa80\partightenfactor0
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \cf3 # Load individual data.
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 use Individual_level, clear\'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 \'a0
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 # Merge household data (one household to many individuals).
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \
-
-\fs29\fsmilli14667 \AppleTypeServices\AppleTypeServicesF65539 merge 1:m HHID using Household_level
-\fs32 \AppleTypeServices\AppleTypeServicesF65539 \cell \lastrow\row
-}
+# Load individual data.
+use Individual_level, clear 
+ 
+# Merge household data (one household to many individuals).
+merge 1:m HHID using Household_level
